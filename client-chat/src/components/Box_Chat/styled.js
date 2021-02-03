@@ -6,7 +6,7 @@ export const DivForm = styled.div`
                                 flex-direction: column;
                                 justify-content: center;
                                 align-items: center;
-                                width: 280px;
+                                width: 96%;
                                 border: 5px solid var(--theme-body-border);
                                 margin: 2px;
                                 border-radius: 10px;
@@ -31,18 +31,30 @@ export const DivInput = styled.div`
                                 justify-content: center;
                                 align-items: center; 
                                 margin-top: 3px;
+                                width: 100%;
+
 `
 
-export const Input = styled.input`
-                    display: inline-block;
-                    width: 220px;
+export const Form = styled.form`
+                                display: flex;
+                                justify-content: center;
+                                align-items: center; 
+                                margin-top: 3px;
+                                width: 100%;
+
+`
+
+export const Input = styled.textarea`
+                    font-family: var(--font-fam);
+                    font-size: var(--font-size);
                     margin: 10px 0px;
                     padding: .2rem;
                     background-color: whitesmoke;
                     border: none;
                     border-radius: 10px;
                     font-size: 1rem;
-                    height: 29px;
+                    resize: none;
+                    margin-right: 5px;
 `
 
 export const Button = styled.button`
@@ -51,11 +63,11 @@ export const Button = styled.button`
                                 margin-top: 10px;
                                 background-color: var(--brand-color_7);
                                 color: var(--theme-title);
-                                font-size: 1rem;
+                                font-size: 0.8rem;
                                 padding: .6rem;
                                 font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
                                 font-weight: 900;
-                                width: 228px;
+                                width: 70px;
                                 border: 2px solid var(--theme-body-txt);
                                 border-radius: 10px;
                                 letter-spacing: 3px;

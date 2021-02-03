@@ -1,41 +1,18 @@
-import React, {useEffect, useState} from 'react';
-import io from 'socket.io-client';
-//Importando Componentes
-import Autor from '../Autor_Chat/Autor';
+import React from 'react';
+import Message from '../Message/Message';
 //Importando Estilos
-import {DivMsg} from './styled';
+import {DivMsg, DivMessage} from './styled';
 
-const Message = ({params, endpoint}) => {
-    const {username, room} = params;
-    const [messages, setMessages] = useState([])
-
-    useEffect(() => {
-        const socket = io(endpoint); 
-        socket.emit('join', {username, room} ,(error) => {
-            console.log(error);
-        });
-
-        return () => {
-            socket.emit('disconnected');
-            socket.off();
-        }
-
-    },[username, room, endpoint] )
-    
-   useEffect(() => {
-       const socket = io(endpoint); 
-       socket.on('message', (message) => {
-           setMessages([...messages, message]);
-       }) 
-       console.log('lista mensaje: ', messages);
-   }, [messages, endpoint])
+const Messages = ({params, messages}) => {
+    //const {username, room} = params;
+    console.log('dentro messages : ', messages);
     return (
-        <DivMsg>
+        <DivMsg> 
             {
-                messages.map((index, message) => (<div key={index}><p>{message.user}</p><p>{message.text}</p></div>))
-            }
+                messages.map((message, index) => (<DivMessage key={index}><Message message={message} username={params.username}/></DivMessage>))
+            }  
         </DivMsg>
     )
 }
 
-export default Message
+export default Messages

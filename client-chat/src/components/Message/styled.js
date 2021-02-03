@@ -1,22 +1,24 @@
 import styled from '@emotion/styled';
 
-export const Div_Path_Autor = styled.div`
+export const DivPathAutor = styled.div`
                                     display: flex;
                                     justify-content: flex-end;
+                                    align-items: center;
                                     font-family: Verdana, Geneva, Tahoma, sans-serif;
                                     font-size: 0.8rem;
                                     width: 100%;                                  
 `
 
-export const Div_Path_Friend = styled.div`
+export const DivPathFriend = styled.div`
                                     display: flex;
                                     justify-content: flex-start;
+                                    align-items: center;
                                     font-family: Verdana, Geneva, Tahoma, sans-serif;
                                     font-size: 0.8rem;
                                     width: 100%;                                  
 `
 
-export const Div_Autor = styled.div`
+export const DivAutor = styled.div`
                                 background-color: var(--brand-color_9);
                                 width: 200px;
                                 border-radius: 10px;
@@ -24,7 +26,7 @@ export const Div_Autor = styled.div`
                                 margin: 5px;
 `
 
-export const Div_Friend = styled.div`
+export const DivFriend = styled.div`
                                 background-color: var(--brand-color_10);
                                 width: 200px;
                                 border-radius: 10px;

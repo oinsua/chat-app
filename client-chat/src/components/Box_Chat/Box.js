@@ -1,47 +1,58 @@
-import React, {useState} from 'react'
-import io from 'socket.io-client';
-
+import React from 'react';
+import socket from '../../socket/socket';
 //Importando styled 
-import {DivForm, DivInput, SpanError, Button, Input}  from './styled';
+import {DivForm, DivInput, SpanError, Button, Input, Form}  from './styled';
 
-const Box = ({params, endpoint}) => {
-    const socket = io(endpoint);
-
-    const [message, setMessage] = useState({});
-  
+const Box = ({params}) => {
+   
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('send message box: ', params.username, e.target.msg.value )
+        const message = {
+            user: params.username,
+            text: e.target.msg.value
+        }
         if(e.target.msg.value.length !== 0){
-           socket.emit('send_message', {
-               user: params.username,
-               text: e.target.msg.value
-            })
-          } 
-      
-    }
+             socket.emit('send_message', message,(error) => {
+                console.log('error desde server: ', error)
+              });  
+              e.target.msg.value = '';   
+       }
+}
 
     const handleInputChange = (e) => {
-        console.log('msg en box', e.target.value)
-        setMessage({
-            ...message,
-            [e.target.name]: e.target.value
-        })
+       console.log(e.target.value);
+    }
+
+    const handleKeyPress = (e) => {
+        console.log('valor del textarea: ', e.target.value)
+        if(e.key === 'Enter' && e.target.value.length !== 0){
+            e.preventDefault();
+        console.log('send message box: ', params.username, e.target.value )
+        const message = {
+            user: params.username,
+            text: e.target.value
+        }
+        socket.emit('send_message', message,(error) => {
+            console.log('error desde server: ', error)
+          });
+          e.target.value = ''; 
+        }
+       
+
     }
 
     return (
             <DivForm>
-                <form onSubmit={handleSubmit}>
+                <Form onSubmit={handleSubmit}>
                     <DivInput>
-                    <Input  name="msg" type="text"  onChange={handleInputChange}/>
+                        <Input  id="text" name="msg" cols="20" rows="3"  onChange={handleInputChange} onKeyPress={handleKeyPress} required/>
                         <Button name="send" value="Send" type="submit">SEND</Button>
                     </DivInput>
-                </form>
+                </Form>
                 <SpanError>
                     
                </SpanError>
             </DivForm>
     )
 }
-
-export default Box
+export default Box;

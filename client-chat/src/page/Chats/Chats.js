@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import socket from '../../socket/socket';
 import {Helmet} from "react-helmet";
 import { useParams} from "react-router-dom";
 //Importando Compoenentes
 import Box from '../../components/Box_Chat/Box';
-import Message from '../../components/Message_Chat/Message';
+import Messages from '../../components/Message_Chat/Message';
 import Header from '../../components/Header_Chat/Header';
 //Importar Estilos
 import {DivChat, DivContainer} from './styled';
@@ -13,8 +14,39 @@ import {DivChat, DivContainer} from './styled';
 const Chats = () => {
     /*Tomando el parametro enviado por la url */
     const params = useParams();
-    const ENDPOINT = 'localhost:4000';
+    const [messages, setMessages] = useState([]);
     console.log(params);
+
+
+    useEffect(() => {
+      const {username, room} = params;
+      console.log('socket chat', socket.id);
+      
+     /*  socket.emit('join', {username, room}, (error) => {
+            console.log('error desde server: ', error)
+      }); */
+
+      socket.emit('loading', {username, room}, (error) => {
+        console.log('error desde server: ', error)
+      });
+    
+      /* socket.on('message', (message) => {
+          console.log(message);
+      }) */
+
+      return () => {
+          socket.on('disconnected');
+          socket.off();
+      }
+
+    },[params])
+
+    useEffect(() => {
+        socket.on('message', (message) => {
+            setMessages([...messages, message]);
+            console.log('list messages: ',messages);
+        })
+    },[messages])
 
     return (
         <>
@@ -28,8 +60,8 @@ const Chats = () => {
         <DivContainer>
             <DivChat>
                 <Header params={params}/>
-                <Message params={params} endpoint={ENDPOINT}/>
-                <Box params={params} endpoint={ENDPOINT}/>
+                <Messages params={params} messages={messages}/>
+                <Box params={params}/>
             </DivChat>
         </DivContainer>
         </>

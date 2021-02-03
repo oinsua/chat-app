@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect} from 'react'
 import {Helmet} from "react-helmet";
-import io from 'socket.io-client';
+import socket from '../../socket/socket';
 //Importando hooks
 import { useHistory } from "react-router-dom";
 //Importando styled
@@ -14,15 +14,16 @@ const Home = () => {
      const history = useHistory(); //Se crea un objeto para la navegacion
      const inputRef = useRef(null);
      const [data, setData] = useState({username: '', room: ''});
-     const [error, setError] = useState(false);
+     const [error, setError] = useState();
     //Evento que se encarga de enviar el formulario a la Chat
     const handleSubmit =  (e) => {
         e.preventDefault();
-        const socket = io('localhost:4000');
         const {username, room} = data;
         socket.emit('join', {username, room} ,(error) => {
-           error ? setError(error) : history.push(`/chats/${data.username}/${data.room}`) 
-        });        
+        console.log(socket.id)
+            error ? setError(error.error) : history.push(`/chats/${data.username}/${data.room}`) 
+        }); 
+        //history.push(`/chats/${data.username}/${data.room}`)
     }
     //Evento para mantener los input controlados
     const handleInputChange = (e) => {
