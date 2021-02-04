@@ -20,6 +20,7 @@ module.exports = (io) => {
         if(!user) cb({error: 'User undefined'})
         socket.emit('message', {user: 'admin', text:`${username}, welcome to the room ${room}`}); //Se emite un mensaje de bienvenida solo para le usuario
         socket.broadcast.to(room).emit('message', {user: 'admin', text: `${username}, has joined!!!`}) //Se emite un sms para todos los usuarios de la sala
+        io.to(user.room).emit('roomData', {room: user.room, users: getUserInRoom(user.room)});
         cb();    
     })
  
@@ -29,11 +30,15 @@ module.exports = (io) => {
            const resUser = getUser(user);
            if(!resUser) cb({error: 'User undefined'})
      
-           io.to(resUser.room).emit('message', {user: user, text: text})
+           io.to(resUser.room).emit('message', {user: user, text: text});
+           io.to(resUser.room).emit('roomData', {room: user.room, users: getUserInRoom(user.room)});
        }) 
   
        socket.on('disconnected', () => {
-           console.log('User had left!!!');
+           const user = removeUser(socket.id)
+
+           if(user)
+           io.to(user.room).emit('message', {user: 'admin', text: `${user.username} has let!!!`})
        })
     })
  
