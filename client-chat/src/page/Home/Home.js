@@ -20,14 +20,11 @@ const Home = () => {
         e.preventDefault();
         const {username, room} = data;
         socket.emit('join', {username, room} ,(error) => {
-        console.log(socket.id)
             error ? setError(error.error) : history.push(`/chats/${data.username}/${data.room}`) 
         }); 
-        //history.push(`/chats/${data.username}/${data.room}`)
     }
     //Evento para mantener los input controlados
     const handleInputChange = (e) => {
-        console.log(e.target.value)
         setData({
             ...data,
             [e.target.name]: e.target.value

@@ -7,7 +7,6 @@ module.exports = (io) => {
 
        socket.on('join', ({username, room}, cb) => {
          //Verificar que el usuario existe
-         console.log('socket id: ', socket.id, 'user inic ',username, 'sala inic ', room )
          const {error, user} = addUser({id: socket.id, username, room});
          error ? console.log('error', error) : console.log('user', user.username, user.room);
          
@@ -26,11 +25,8 @@ module.exports = (io) => {
  
        socket.on('send_message', (message, cb) => {
            const {user, text} = message;
-           console.log('user - text :',message);
          //Recuperar el usuario que emite el mensaje
            const resUser = getUser(user);
-           console.log('resUser :', resUser);
-           console.log('object resUser:', resUser);
            if(!resUser) cb({error: 'User undefined'})
      
            io.to(resUser.room).emit('message', {user: user, text: text})

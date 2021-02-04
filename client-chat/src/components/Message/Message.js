@@ -3,8 +3,7 @@ import {DivPathAutor, DivPathFriend, DivFriend, DivAutor} from './styled';
 
 const Message = ({message: {user, text}, username}) => {
     let isUser = false;
-     console.log('user msg :',user)
-     console.log('username :', username)
+    
     if(user === username)
         isUser = true;
         

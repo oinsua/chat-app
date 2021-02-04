@@ -24,10 +24,9 @@ const Box = ({params}) => {
     }
 
     const handleKeyPress = (e) => {
-        console.log('valor del textarea: ', e.target.value)
+        
         if(e.key === 'Enter' && e.target.value.length !== 0){
             e.preventDefault();
-        console.log('send message box: ', params.username, e.target.value )
         const message = {
             user: params.username,
             text: e.target.value
