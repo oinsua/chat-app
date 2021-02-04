@@ -4,7 +4,7 @@ import {Helmet} from "react-helmet";
 import { useParams} from "react-router-dom";
 //Importando Compoenentes
 import Box from '../../components/Box_Chat/Box';
-import Messages from '../../components/Message_Chat/Message';
+import Messages from '../../components/Message_Chat/Messages';
 import Header from '../../components/Header_Chat/Header';
 //Importar Estilos
 import {DivChat, DivContainer} from './styled';
