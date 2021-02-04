@@ -1,7 +1,7 @@
 const {addUser, removeUser, getUser, getUserInRoom} = require('../users/user');
 
 module.exports = (io) => {
-
+  
     io.on('connection', (socket) => {
        console.log('We have a new connection!!!');
 
@@ -20,7 +20,7 @@ module.exports = (io) => {
         if(!user) cb({error: 'User undefined'})
         socket.emit('message', {user: 'admin', text:`${username}, welcome to the room ${room}`}); //Se emite un mensaje de bienvenida solo para le usuario
         socket.broadcast.to(room).emit('message', {user: 'admin', text: `${username}, has joined!!!`}) //Se emite un sms para todos los usuarios de la sala
-        io.to(user.room).emit('roomData', {room: user.room, users: getUserInRoom(user.room)});
+        //io.to(user.room).emit('roomData', {room: user.room, users: getUserInRoom(user.room)});
         cb();    
     })
  
@@ -31,12 +31,11 @@ module.exports = (io) => {
            if(!resUser) cb({error: 'User undefined'})
      
            io.to(resUser.room).emit('message', {user: user, text: text});
-           io.to(resUser.room).emit('roomData', {room: user.room, users: getUserInRoom(user.room)});
+           //io.to(resUser.room).emit('roomData', {room: user.room, users: getUserInRoom(user.room)});
        }) 
   
-       socket.on('disconnected', () => {
-           const user = removeUser(socket.id)
-
+       socket.on('disconnected', ({username}) => {
+           const user = removeUser(username)
            if(user)
            io.to(user.room).emit('message', {user: 'admin', text: `${user.username} has let!!!`})
        })

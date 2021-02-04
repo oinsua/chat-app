@@ -20,11 +20,12 @@ const Chats = () => {
       const {username, room} = params; //Se reciben los parametros por la url a traves de router
     
       socket.emit('loading', {username, room}, (error) => { //Emite el evento loading
+        if(error)
         console.log('error desde server: ', error)
       });
     
       return () => { 
-          socket.on('disconnected'); //Se recibe el evento desconectar
+          socket.on('disconnected', {username}); //Se recibe el evento desconectar
           socket.off(); //Se cierre el enlace
       }
     },[params])

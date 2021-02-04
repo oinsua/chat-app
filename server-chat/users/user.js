@@ -5,16 +5,14 @@ const addUser = ({id, username, room}) => {
    const existUser = users.find((user) => user.username === username);
 
    if(existUser) return {error: 'User is taken'}
-
    const user = {id, username, room};
    users.push(user);
-   console.log('despues list user: ', users)
+
    return {user};
 }
 
-const removeUser = (id) => {
-    
-    const index = users.findIndex((user) => { user.id ===id});
+const removeUser = (username) => {
+    const index = users.findIndex((user) => { user.username === username});
     
     if(index !== -1)
      return users.splice(index, 1)[0];

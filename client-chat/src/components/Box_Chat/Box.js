@@ -20,7 +20,7 @@ const Box = ({params}) => {
 }
 
     const handleInputChange = (e) => {
-       console.log(e.target.value);
+        e.target.name = e.target.value;
     }
 
     const handleKeyPress = (e) => {
